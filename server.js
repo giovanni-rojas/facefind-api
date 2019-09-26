@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const knex = require('knex');
 
-const postgres = knex(
+const db = knex(
 	{
 	  client: 'pg',
 	  connection: 
@@ -18,7 +18,9 @@ const postgres = knex(
 	}
 );
 
-//console.log(postgres.select('*').from('users'));
+db.select('*').from('users').then(data => {
+	console.log(data);
+});
 
 const app = express();
 
@@ -76,17 +78,18 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
 	const { email, name, password } = req.body;
-	// bcrypt.hash(password, saltRounds).then(function(hash) {
- //    	console.log(hash);
-	// });
-	database.users.push({
-		id: '125',
-		name: name,
+	db('users')
+		.returning('*')		//returns all columns
+		.insert({			//inserts into db, only columns we need
 		email: email,
-		entries: 0,
+		name: name,
 		joined: new Date()
-	})
-	res.json(database.users[database.users.length - 1]);
+		})
+		.then(user => {
+			res.json(user[0]);
+		})
+		//.catch(err => res.status(400).json(err)); 	//this would return actual user info. Not good!
+		.catch(err => res.status(400).json('unable to return user'));
 })
 
 app.get('/profile/:id', (req, res) => {
