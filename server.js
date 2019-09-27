@@ -12,15 +12,15 @@ const db = knex(
 		  {
 		    host : '127.0.0.1',
 		    user : 'postgres',
-		    password : '',
+		    password : 'lolpwnt',
 		    database : 'facefind'
 		  }
 	}
 );
 
-db.select('*').from('users').then(data => {
-	console.log(data);
-});
+// db.select('*').from('users').then(data => {
+// 	console.log(data);
+// });
 
 const app = express();
 
@@ -94,29 +94,26 @@ app.post('/register', (req, res) => {
 
 app.get('/profile/:id', (req, res) => {
 	const { id } = req.params;
-	let found = false;		//need this because ???
-	database.users.forEach(user => {
-		if (user.id === id) {
-			found = true;
-			return res.json(user);
-		}
-	})
-	if (!found)
-		res.status(404).json('not found');
+	db.select('*').from('users').where({id})
+		.then(user => {
+			if (user.length)
+				res.status(200).json(user[0]);
+			else
+				throw new Error('Could not load user');
+		})
+		.catch(err => 
+			res.status(404).json(err.message));
 })
 
 app.put('/image', (req, res) => {
 	const { id } = req.body;
-	let found = false;
-	database.users.forEach(user => {
-		if (user.id === id) {
-			found = true;
-			user.entries++;
-			return res.json(user.entries);
-		}
-	})
-	if (!found)
-		res.status(404).json('not found');
+	db('users').where('id', '=', id)
+		.increment('entries', 1)
+		.returning('entries')
+		.then(entries => {
+			res.status(200).json(entries[0]);
+		})
+		.catch(err => res.status(400).json('Could not get entries'))
 })
 
 // // Load hash from your password DB.
