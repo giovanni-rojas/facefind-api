@@ -1,6 +1,11 @@
 const handleRegister = (req, res, db, bcrypt, saltRounds) => {
 	const { email, name, password } = req.body;
 	
+	//check for empty forms
+	if(!email || !name || !password) {
+		return res.status(400).json('incorrect for sumbitted');
+	}
+
 	//hash passwords
 	const salt = bcrypt.genSaltSync(saltRounds);
 	const hash = bcrypt.hashSync(password, salt);
