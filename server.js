@@ -10,7 +10,7 @@ const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
 
-const PORT = process.env.PORT;
+//const PORT = process.env.PORT;
 
 const db = knex(
 	{
@@ -30,9 +30,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/', (req, res) => {
-	res.send(database.users);
-})
+app.get('/', (req, res) => { res.send('it is working!') })
 
 app.post('/signin', signin.handleSignin(db, bcrypt));												//cleaner way of running this, but a bit confusing to grasp
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt, saltRounds) });		//dependency injection important
@@ -40,6 +38,6 @@ app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db) }
 app.put('/image', (req, res) => { image.handleImage(req, res, db) });
 app.post('/imageurl', (req, res) => { image.handleApiCall(req, res) });
 
-app.listen(process.env.PORT || 3001, () => {
+app.listen(process.env.PORT || 300, () => {
 	console.log(`app is running on port ${process.env.PORT}`);
 })
