@@ -17,16 +17,11 @@ const db = knex(
 	  client: 'pg',
 	  connection: 
 		  {
-		    host : '127.0.0.1',
-		    user : 'postgres',
-		    password : 'lolpwnt',
-		    database : 'facefind'
+			connectionString: process.env.DATABASE_URL,
+			ssl: true
 		  }
 	}
 );
-
-// connectionString: process.env.DATABASE_URL,
-// ssl: true
 
 const app = express();
 
