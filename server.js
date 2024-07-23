@@ -30,7 +30,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => { res.send("it's working!") })
-app.post('/signin', signin.handleSignin(db, bcrypt));												//cleaner way of running this, but a bit confusing to grasp
+app.post('/signin', (req, res) => { signin.handleSignin(db, bcrypt) });												//cleaner way of running this, but a bit confusing to grasp
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) });		//dependency injection important
 app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db) });
 app.put('/image', (req, res) => { image.handleImage(req, res, db) });
