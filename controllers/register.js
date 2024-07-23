@@ -14,26 +14,26 @@ const handleRegister = (req, res, db, bcrypt) => {
 			hash: hash,
 			email: email
 		})
-		.into('login')
-		.returning('email')
-		.then(loginEmail => {
-			return trx('users')
-			.returning('*')		//returns all columns
-			.insert({			//inserts into db, only columns we need
-				email: loginEmail[0].email,
-				name: name,
-				joined: new Date()
-			})
-			.then(user => {
-				res.json(user[0]);
-			})
+	.into('login')
+	.returning('email')
+	.then(loginEmail => {
+		return trx('users')
+		.returning('*')		//returns all columns
+		.insert({			//inserts into db, only columns we need
+			email: loginEmail[0],
+			name: name,
+			joined: new Date()
 		})
-		.then(trx.commit)
-		.catch(trx.rollback)
+		.then(user => {
+			res.json(user[0]);
+		})
+	})
+	.then(trx.commit)
+	.catch(trx.rollback)
 	})	
 
 	 	//this would return actual user info. Not good!
-		.catch(err => res.status(400).json('unable to register'))
+	.catch(err => res.status(400).json('unable to register'))
 }
 
 module.exports = {
