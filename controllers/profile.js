@@ -3,14 +3,14 @@ const handleProfileGet = (req, res, db) => {
 	db.select('*').from('users').where({id})
 		.then(user => {
 			if (user.length)
-				res.status(200).json(user[0]);
+				res.json(user[0]);
 			else
-				throw new Error('Could not load user');
+				res.status(400).json('User Not Found');
 		})
 		.catch(err => 
-			res.status(404).json(err.message));
+			res.status(400).json('Could Not Load User'));
 }
 
 module.exports = {
-	handleProfileGet: handleProfileGet
+	handleProfileGet
 }

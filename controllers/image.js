@@ -1,12 +1,11 @@
 const Clarifai = require('clarifai');
 
 const app = new Clarifai.App({
-  apiKey: process.env.API_CLARIFAI
+  apiKey: 'ef9369da179846819e35a10febe67441'
 });
 
 const handleApiCall = (req, res) => {
-	app.models
-		.predict(Clarifai.FACE_DETECT_MODEL, req.body.input)      //wouldn't work with this.state.imageUrl (idk why)
+	app.models.predict('face-detection', req.body.input)      //wouldn't work with this.state.imageUrl (idk why)
 		.then(data => {
 			res.json(data);
 		})
@@ -19,12 +18,12 @@ const handleImage = (req, res, db) => {
 		.increment('entries', 1)
 		.returning('entries')
 		.then(entries => {
-			res.status(200).json(entries[0]);
+			res.json(entries[0].entries);
 		})
 		.catch(err => res.status(400).json('Could not get entries'))
 }
 
 module.exports = {
-	handleImage: handleImage,
-	handleApiCall: handleApiCall
+	handleImage,
+	handleApiCall
 }

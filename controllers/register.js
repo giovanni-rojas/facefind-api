@@ -1,14 +1,13 @@
-const handleRegister = (req, res, db, bcrypt, saltRounds) => {
+const handleRegister = (req, res, db, bcrypt) => {
 	const { email, name, password } = req.body;
 	
 	//check for empty forms
 	if(!email || !name || !password) {
-		return res.status(400).json('incorrect for sumbitted');
+		return res.status(400).json('incorrect form sumbitted');
 	}
 
 	//hash passwords
-	const salt = bcrypt.genSaltSync(saltRounds);
-	const hash = bcrypt.hashSync(password, salt);
+	const hash = bcrypt.hashSync(password);
 	
 	db.transaction(trx => {		//used when modifying multiple tables. If modifying one fails, they all fail
 		trx.insert({			//insert user's login info to 'login' table
@@ -21,9 +20,9 @@ const handleRegister = (req, res, db, bcrypt, saltRounds) => {
 			return trx('users')
 			.returning('*')		//returns all columns
 			.insert({			//inserts into db, only columns we need
-			email: loginEmail[0],
-			name: name,
-			joined: new Date()
+				email: loginEmail[0].email,
+				name: name,
+				joined: new Date()
 			})
 			.then(user => {
 				res.json(user[0]);
@@ -34,9 +33,9 @@ const handleRegister = (req, res, db, bcrypt, saltRounds) => {
 	})	
 
 	 	//this would return actual user info. Not good!
-		.catch(err => res.status(400).json('unable to return user'));
+		.catch(err => res.status(400).json('unable to register'));
 }
 
 module.exports = {
-	handleRegister: handleRegister
+	handleRegister
 }

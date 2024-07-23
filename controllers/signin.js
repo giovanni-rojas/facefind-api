@@ -3,7 +3,7 @@ const handleSignin = (db, bcrypt) => (req, res) =>{
 
 	//check for empty forms
 	if(!email || !password) {
-		return res.status(400).json('incorrect for sumbitted');
+		return res.status(400).json('incorrect form sumbitted');
 	}
 
 	db.select('email', 'hash').from('login')
@@ -18,12 +18,13 @@ const handleSignin = (db, bcrypt) => (req, res) =>{
 					})
 					.catch(err => res.status(400).json('unable to get user'))
 			}
-			else
+			else {
 				res.status(400).json('wrong credentials')
+			}
 		})
 		.catch(err => res.status(400).json('wrong credentials'))
 }
 
 module.exports = {
-	handleSignin: handleSignin
+	handleSignin
 }
