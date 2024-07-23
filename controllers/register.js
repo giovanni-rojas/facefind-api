@@ -11,8 +11,8 @@ const handleRegister = (req, res, db, bcrypt) => {
 	
 	db.transaction(trx => {		//used when modifying multiple tables. If modifying one fails, they all fail
 		trx.insert({			//insert user's login info to 'login' table
-			email: email,
-			hash: hash
+			hash: hash,
+			email: email
 		})
 		.into('login')
 		.returning('email')
@@ -33,7 +33,7 @@ const handleRegister = (req, res, db, bcrypt) => {
 	})	
 
 	 	//this would return actual user info. Not good!
-		.catch(err => res.status(400).json('unable to register'));
+		.catch(err => res.status(400).json('unable to register'))
 }
 
 module.exports = {
