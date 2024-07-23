@@ -20,7 +20,7 @@ const handleRegister = (req, res, db, bcrypt) => {
 		return trx('users')
 		.returning('*')		//returns all columns
 		.insert({			//inserts into db, only columns we need
-			email: loginEmail[0],
+			email: loginEmail[0].email,
 			name: name,
 			joined: new Date()
 		})
