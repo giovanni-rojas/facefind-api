@@ -2,7 +2,7 @@ const returnClarifaiRequestOptions = (imageUrl) => {
 
 	const PAT = '03c4f8ee2959479d872414840f56bb94';
 	const USER_ID = 'dd7dgnk1wn7b';       
-	const APP_ID = 'test-face-detectt';
+	const APP_ID = 'test-face-detect';
 	const IMAGE_URL = imageUrl;
   
 	const raw = JSON.stringify({
@@ -34,8 +34,8 @@ const returnClarifaiRequestOptions = (imageUrl) => {
   
 }
 
-const handleApiCall = (req, res, fetch) => {
-	fetch("http://api.clarifai.com/v2/models/" + 'face-detection' + "/outputs", returnClarifaiRequestOptions(req.body.input))
+const handleApiCall = (req, res) => {
+	fetch(`https://api.clarifai.com/v2/models/face-detection/outputs`, returnClarifaiRequestOptions(req.body.input))
     .then((response) => response.json())
     .then((data) => {
       res.json(data.outputs[0].data.regions);
