@@ -1,15 +1,47 @@
 const Clarifai = require('clarifai');
 
-const app = new Clarifai.App({
-  apiKey: 'ef9369da179846819e35a10febe67441'
-});
+const returnClarifaiRequestOptions = (imageUrl) => {
+
+	const PAT = '03c4f8ee2959479d872414840f56bb94';
+	const USER_ID = 'dd7dgnk1wn7b';       
+	const APP_ID = 'test-face-detect';
+	const IMAGE_URL = imageUrl;
+  
+	const raw = JSON.stringify({
+	  "user_app_id": {
+		  "user_id": USER_ID,
+		  "app_id": APP_ID
+	  },
+	  "inputs": [
+		  {
+			  "data": {
+				  "image": {
+					  "url": IMAGE_URL
+				  }
+			  }
+		  }
+	  ]
+	});
+  
+	const requestOptions = {
+	  method: 'POST',
+	  headers: {
+		  'Accept': 'application/json',
+		  'Authorization': 'Key ' + PAT
+	  },
+	  body: raw
+	};
+  
+	return requestOptions;
+  
+}
 
 const handleApiCall = (req, res) => {
-	app.models.predict('face-detection', req.body.input)      //wouldn't work with this.state.imageUrl (idk why)
-		.then(data => {
-			res.json(data);
-		})
-		.catch(err => res.status(400).json('unable to work with API'))
+	fetch("http://api.clarifai.com/v2/models/" + 'face-detection' + "/outputs", returnClarifaiRequestOptions(req.body.input))
+	.then(data => {
+		res.json(data);
+	})
+	.catch(err => res.status(400).json('Unable to Work With API'));
 }
 
 const handleImage = (req, res, db) => {
