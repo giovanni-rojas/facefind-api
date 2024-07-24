@@ -7,6 +7,8 @@ const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
+//const fetch = require('node-fetch');
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
 
 // const db = knex({
@@ -40,7 +42,7 @@ app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt) })
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) });		//dependency injection important
 app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db) });
 app.put('/image', (req, res) => { image.handleImage(req, res, db) });
-app.post('/imageurl', (req, res) => { image.handleApiCall(req, res) });
+app.post('/imageurl', (req, res) => { image.handleApiCall(req, res, fetch) });
 
 app.listen(PORT || 3000, () => {
 	console.log(`app is running on port ${PORT}`);

@@ -1,10 +1,8 @@
-const Clarifai = require('clarifai');
-
 const returnClarifaiRequestOptions = (imageUrl) => {
 
 	const PAT = '03c4f8ee2959479d872414840f56bb94';
 	const USER_ID = 'dd7dgnk1wn7b';       
-	const APP_ID = 'test-face-detect';
+	const APP_ID = 'test-face-detectt';
 	const IMAGE_URL = imageUrl;
   
 	const raw = JSON.stringify({
@@ -36,12 +34,13 @@ const returnClarifaiRequestOptions = (imageUrl) => {
   
 }
 
-const handleApiCall = (req, res) => {
+const handleApiCall = (req, res, fetch) => {
 	fetch("http://api.clarifai.com/v2/models/" + 'face-detection' + "/outputs", returnClarifaiRequestOptions(req.body.input))
-	.then(data => {
-		res.json(data);
-	})
-	.catch(err => res.status(400).json('Unable to Work With API'));
+    .then((response) => response.json())
+    .then((data) => {
+      res.json(data.outputs[0].data.regions);
+    })
+    .catch((err) => res.status(400).json("Unable To Work With API"))
 }
 
 const handleImage = (req, res, db) => {
