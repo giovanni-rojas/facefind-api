@@ -35,7 +35,9 @@ const returnClarifaiRequestOptions = (imageData) => {
 
 const handleApiCall = (req, res) => {
 	const { input, file } = req.body;
-	const imageData = file ? { base64: file.split(',')[1]} : { url: input };
+	const imageData = file 
+		? { base64: file.split(',')[1]} 
+		: { url: input };
 	
 	fetch(`https://api.clarifai.com/v2/models/face-detection/outputs`, returnClarifaiRequestOptions(imageData))
     .then((response) => response.json())
