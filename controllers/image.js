@@ -1,8 +1,8 @@
 const returnClarifaiRequestOptions = (imageData) => {
 
-	const PAT = '03c4f8ee2959479d872414840f56bb94';
-	const USER_ID = 'dd7dgnk1wn7b';       
-	const APP_ID = 'test-face-detect';
+	const PAT = process.env.REACT_APP_PAT;
+	const USER_ID = process.env.REACT_APP_USERNAME;       
+	const APP_ID = process.env.REACT_APP_APP_ID;
 	
 	const IMAGE_SRC = imageData.base64 ? { base64: imageData.base64 } : { url: imageData.url };
   
