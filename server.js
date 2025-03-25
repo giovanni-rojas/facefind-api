@@ -27,9 +27,9 @@ const corsOptions = {
 		'https://facefind-p69lcra66-gios-projects-f2f8301a.vercel.app'
 	],
 	methods: ['POST', 'GET', 'OPTIONS'],
-	allowedHeaders: ['Content-Type', 'Accept', 'Access-Control-Allow-Origin'],
+	allowedHeaders: ['Content-Type', 'Accept'],
 	maxAge: 86400,
-	credentials: true,
+	credentials: false,
 	optionsSuccessStatus: 200
 };
 
