@@ -27,12 +27,15 @@ const corsOptions = {
 		'https://facefind-p69lcra66-gios-projects-f2f8301a.vercel.app'
 	],
 	methods: ['POST', 'GET', 'OPTIONS'],
+	allowedHeaders: ['Content-Type', 'Accept', 'Access-Control-Allow-Origin'],
 	maxAge: 86400,
-	credentials: true
+	credentials: true,
+	optionsSuccessStatus: 200
 };
 
 // Middleware
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json({ limit: MAX_PAYLOAD_SIZE }));
 app.use(express.urlencoded({ extended: true, limit: MAX_PAYLOAD_SIZE }));
 
