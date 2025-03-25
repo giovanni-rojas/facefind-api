@@ -26,8 +26,9 @@ const corsOptions = {
 		'https://face-find-d1246eeab4c8.herokuapp.com',
 		'https://facefind-p69lcra66-gios-projects-f2f8301a.vercel.app'
 	],
-	methods: ['POST', 'GET'],
-	maxAge: 86400
+	methods: ['POST', 'GET', 'OPTIONS'],
+	maxAge: 86400,
+	credentials: true
 };
 
 // Middleware
