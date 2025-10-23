@@ -1,11 +1,4 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
   "rewrites": [
     {
       "source": "/(.*)",
@@ -18,7 +11,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://facefind-p69lcra66-gios-projects-f2f8301a.vercel.app"
+          "value": "https://facefind-api.vercel.app/"
         },
         {
           "key": "Access-Control-Allow-Methods",
