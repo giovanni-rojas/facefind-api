@@ -22,7 +22,7 @@
         },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://giovanni-rojas.github.io/facefind"
+          "value": "https://giovanni-rojas.github.io"
         },
         {
           "key": "Access-Control-Allow-Methods",

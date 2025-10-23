@@ -24,7 +24,7 @@ const corsOptions = {
 	origin: [
 		'http://localhost:3000',
 		'https://facefind-api.vercel.app',
-		'https://giovanni-rojas.github.io/facefind'
+		'https://giovanni-rojas.github.io'
 	],
 	methods: ['POST', 'GET', 'OPTIONS'],
 	allowedHeaders: ['Content-Type', 'Accept'],
