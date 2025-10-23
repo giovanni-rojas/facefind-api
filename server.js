@@ -23,7 +23,8 @@ const limiter = rateLimit({
 const corsOptions = {
 	origin: [
 		'http://localhost:3000',
-		'https://facefind-api.vercel.app'
+		'https://facefind-api.vercel.app',
+		'https://giovanni-rojas.github.io/facefind'
 	],
 	methods: ['POST', 'GET', 'OPTIONS'],
 	allowedHeaders: ['Content-Type', 'Accept'],

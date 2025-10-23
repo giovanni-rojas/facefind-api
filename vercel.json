@@ -21,6 +21,10 @@
           "value": "https://facefind-api.vercel.app"
         },
         {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://giovanni-rojas.github.io/facefind"
+        },
+        {
           "key": "Access-Control-Allow-Methods",
           "value": "GET, POST, OPTIONS"
         },
