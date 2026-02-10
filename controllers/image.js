@@ -45,9 +45,23 @@ const handleApiCall = (req, res) => {
 	fetch(`https://api.clarifai.com/v2/models/${MODEL_ID}/versions/${MODEL_VERSION_ID}/outputs`, returnClarifaiRequestOptions(imageData))
     .then((response) => response.json())
     .then((data) => {
-      res.json(data.outputs[0].data.regions);
+		if (data.status && data.status.code !== 10000) {
+			console.error('Clarifai API error:', JSON.stringify(data.status));
+			return res.status(400).json({ 
+			  error: 'Clarifai API error', 
+			  details: data.status.description || data.status.details || 'Unknown error'
+			});
+		}
+		const regions = data.outputs?.[0]?.data?.regions;
+		res.json(Array.isArray(regions) ? regions : []);
     })
-    .catch((err) => res.status(400).json("Unable To Work With Clarifai API"))
+    .catch((err) => {
+		console.error('Clarifai request failed: ', err);
+		res.status(500).json({
+			error: 'Unable to reach Clarifai API',
+			details: err.message
+		});
+	})
 }
 
 module.exports = {
