@@ -50,6 +50,7 @@ const handleApiCall = (req, res) => {
 			return res.status(400).json({ 
 			  error: 'Clarifai API error', 
 			  details: data.status.description || data.status.details || 'Unknown error'
+			  code: data.status.code
 			});
 		}
 		const regions = data.outputs?.[0]?.data?.regions;
