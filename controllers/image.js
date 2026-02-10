@@ -34,12 +34,15 @@ const returnClarifaiRequestOptions = (imageData) => {
 }
 
 const handleApiCall = (req, res) => {
+	const MODEL_ID = process.env.MODEL_ID;
+	const MODEL_VERSION_ID = process.env.MODEL_VERSION_ID;
+
 	const { input, file } = req.body;
 	const imageData = file 
 		? { base64: file.split(',')[1]} 
 		: { url: input };
 	
-	fetch(`https://api.clarifai.com/v2/models/face-detection/outputs`, returnClarifaiRequestOptions(imageData))
+	fetch(`https://api.clarifai.com/v2/models/${MODEL_ID}/versions/${MODEL_VERSION_ID}/outputs`, returnClarifaiRequestOptions(imageData))
     .then((response) => response.json())
     .then((data) => {
       res.json(data.outputs[0].data.regions);

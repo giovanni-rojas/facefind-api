@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/server.js"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/imageurl",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://facefind-api.vercel.app"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://giovanni-rojas.github.io"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Accept"
+        }
+      ]
+    }
+  ]
+}
