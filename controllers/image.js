@@ -47,7 +47,7 @@ const handleApiCall = (req, res) => {
     .then((data) => {
       res.json(data.outputs[0].data.regions);
     })
-    .catch((err) => res.status(400).json("Unable To Work w/ Clarifai API"))
+    .catch((err) => res.status(400).json("Unable To Work With Clarifai API"))
 }
 
 module.exports = {
