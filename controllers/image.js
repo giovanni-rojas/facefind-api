@@ -49,7 +49,7 @@ const handleApiCall = (req, res) => {
 			console.error('Clarifai API error:', JSON.stringify(data.status));
 			return res.status(400).json({ 
 			  error: 'Clarifai API error', 
-			  details: data.status.description || data.status.details || 'Unknown error'
+			  details: data.status.description || data.status.details || 'Unknown error',
 			  code: data.status.code
 			});
 		}
